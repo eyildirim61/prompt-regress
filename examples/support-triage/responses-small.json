@@ -1,0 +1,14 @@
+{
+  "refund-damaged": "{\"category\": \"refund\", \"priority\": \"high\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Sorry your order arrived damaged! Please send a photo of the broken jar and we will look into it within 24 hours.\"}",
+  "where-is-my-order": "Sure! Here is the JSON:\n{\"category\": \"shipping\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Sorry for the delay, I have asked the carrier for an update.\"}",
+  "change-address": "{\"category\": \"order_change\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"If order 7713 hasn't shipped yet we can update the address. Please reply with the new address and we'll check right away.\"}",
+  "legal-threat": "{\"category\": \"complaint\", \"priority\": \"high\", \"escalate\": false, \"language\": \"en\", \"reply\": \"We apologise for the trouble. Your next delivery will be correct.\"}",
+  "allergen-question": "{\"category\": \"product_question\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Our hazelnut spread is definitely safe for people with milk allergies.\"}",
+  "cancel-subscription": "{\"category\": \"account\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Sure, I can help cancel your snack box subscription. You'll get a confirmation email once it's done.\"}",
+  "spam": [
+    "{\"category\": \"spam\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"No reply needed.\"}",
+    "{\"category\": \"account\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Please log in to claim your gift card.\"}",
+    "{\"category\": \"spam\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"No reply needed.\"}"
+  ],
+  "turkish-missing-items": "{\"category\": \"missing_items\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"tr\", \"reply\": \"Eksik ürünler için özür dileriz. Sipariş numaranızı gönderin, 2 kavanoz balı hemen yollayalım.\"}"
+}

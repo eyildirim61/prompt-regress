@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+      - name: Demo suite (mock provider)
+        run: |
+          prompt-regress run examples/support-triage/suite.yaml -o runs -q
+          prompt-regress run examples/support-triage/suite.yaml -o runs -q \
+            --set provider.model=demo-small --set provider.responses=responses-small.json \
+            --baseline "$(ls runs/*.json | head -1)"

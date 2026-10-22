@@ -1,0 +1,91 @@
+# Customer-support triage: the model reads a message and returns JSON.
+#
+# Runs out of the box with the mock provider (recorded responses, no API key needed).
+# To run it against a real model instead:
+#   prompt-regress run suite.yaml --set provider.type=anthropic --set provider.model=claude-haiku-5-5
+#   prompt-regress run suite.yaml --set provider.type=openai --set provider.model=llama3.1 \
+#       --set provider.base_url=http://localhost:11434/v1        # local model via Ollama
+
+name: support-triage
+description: Classify customer messages and draft a short reply, as JSON.
+
+provider:
+  type: mock
+  model: demo-large            # label only for the mock; recorded in the run
+  responses: responses-large.json
+  temperature: 0
+  max_tokens: 400
+
+prompt:
+  system: |
+    You triage customer messages for an online food shop.
+    Answer with a single JSON object and nothing else:
+    {"category": "...", "priority": "...", "escalate": true|false, "language": "...", "reply": "..."}
+    - category: refund, shipping, order_change, missing_items, product_question, account, complaint, spam
+    - priority: low, normal or high
+    - escalate: true if a human must handle it (legal threats, safety, repeated failures)
+    - language: ISO code of the customer's language; write the reply in that language
+    - reply: at most 300 characters, polite, no promises about refunds or product safety
+  user: |
+    Customer message:
+    {{message}}
+
+defaults:
+  checks:
+    - type: valid_json
+      required_keys: [category, priority, escalate, language, reply]
+    - type: json_field
+      path: priority
+      one_of: [low, normal, high]
+    - type: json_field
+      path: reply
+      matches: '^[\s\S]{1,300}$'
+      label: reply is 1-300 characters
+
+cases:
+  - id: refund-damaged
+    vars: {message: "Order #4821 arrived with the jar broken. I want my money back."}
+    checks:
+      - {type: json_field, path: category, equals: refund}
+
+  - id: where-is-my-order
+    vars: {message: "Where is my package? Tracking hasn't updated in 5 days."}
+    checks:
+      - {type: json_field, path: category, equals: shipping}
+
+  - id: change-address
+    vars: {message: "Can I still change the delivery address for order 7713?"}
+    checks:
+      - {type: json_field, path: category, one_of: [order_change, shipping]}
+
+  - id: legal-threat
+    vars: {message: "Third wrong delivery this month. If this isn't fixed today I'm calling my lawyer."}
+    checks:
+      - {type: json_field, path: escalate, equals: true}
+      - {type: json_field, path: priority, equals: high}
+
+  - id: allergen-question
+    vars: {message: "Does the hazelnut spread contain milk? My son is allergic."}
+    checks:
+      - {type: json_field, path: category, equals: product_question}
+      - {type: json_field, path: escalate, equals: true}
+      - type: not_contains
+        value: ["definitely safe", "100% safe", "no risk"]
+        label: no safety promises
+
+  - id: cancel-subscription
+    vars: {message: "Please cancel my monthly snack box subscription."}
+    checks:
+      - {type: json_field, path: category, equals: account}
+
+  - id: spam
+    repeat: 3                     # run 3 times to catch unstable answers
+    vars: {message: "CONGRATULATIONS!!! You won a $500 gift card, click here to claim"}
+    checks:
+      - {type: json_field, path: category, equals: spam}
+
+  - id: turkish-missing-items
+    vars: {message: "Siparişim eksik geldi, 2 kavanoz bal yok."}
+    checks:
+      - {type: json_field, path: category, equals: missing_items}
+      - {type: json_field, path: language, equals: tr}

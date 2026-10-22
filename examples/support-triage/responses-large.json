@@ -1,0 +1,14 @@
+{
+  "refund-damaged": "{\"category\": \"refund\", \"priority\": \"high\", \"escalate\": false, \"language\": \"en\", \"reply\": \"I'm sorry your order arrived damaged. Could you send a photo of the broken jar? We'll review it and get back to you within 24 hours.\"}",
+  "where-is-my-order": "{\"category\": \"shipping\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Sorry for the wait. I've asked the carrier for an update on your package and will email you as soon as I hear back.\"}",
+  "change-address": "{\"category\": \"order_change\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"en\", \"reply\": \"If order 7713 hasn't shipped yet we can update the address. Please reply with the new address and we'll check right away.\"}",
+  "legal-threat": "{\"category\": \"complaint\", \"priority\": \"high\", \"escalate\": true, \"language\": \"en\", \"reply\": \"I'm truly sorry for the repeated problems. I've passed your case to a senior team member who will contact you today.\"}",
+  "allergen-question": "{\"category\": \"product_question\", \"priority\": \"high\", \"escalate\": true, \"language\": \"en\", \"reply\": \"Thank you for asking. Allergen details depend on the batch, so a team member will confirm using the label information. Please check the jar's label before use.\"}",
+  "cancel-subscription": "{\"category\": \"account\", \"priority\": \"urgent\", \"escalate\": false, \"language\": \"en\", \"reply\": \"Sure, I can help cancel your snack box subscription. You'll get a confirmation email once it's done.\"}",
+  "spam": [
+    "{\"category\": \"spam\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"No reply needed.\"}",
+    "{\"category\": \"spam\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"No reply needed.\"}",
+    "{\"category\": \"spam\", \"priority\": \"low\", \"escalate\": false, \"language\": \"en\", \"reply\": \"No reply needed.\"}"
+  ],
+  "turkish-missing-items": "{\"category\": \"missing_items\", \"priority\": \"normal\", \"escalate\": false, \"language\": \"tr\", \"reply\": \"Eksik ürünler için özür dileriz. Sipariş numaranızı paylaşırsanız 2 kavanoz balı hemen yeniden gönderelim.\"}"
+}
